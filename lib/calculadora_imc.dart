@@ -15,7 +15,7 @@ class CalculadoraImc {
   }
 
   String obterResultado (){
-    if(_imc >=25){
+    if(_imc >=25.0){
      return 'Acima do peso!';
     }else if(_imc >18.5){
       return 'Peso Ideal!';
@@ -25,12 +25,12 @@ class CalculadoraImc {
   }
 
   String obterInterpretacao(){
-    if (_imc >= 25) {
-      return 'Você está com o peso acima do normal. Tente se execitar mais.';
+    if(_imc >= 25.0) {
+      return 'Você está com o peso acima do normal.';
     } else if (_imc > 18.5) {
-      return 'Excelente! Seu peso está normal';
-    } else {
-      return 'Você está com o peso abaixo do normal. Procure comer um pouco mais';
+      return 'Excelente! Seu peso está normal.';
+    } else{
+      return 'Você está com o peso abaixo do normal.';
     }
   }
 }

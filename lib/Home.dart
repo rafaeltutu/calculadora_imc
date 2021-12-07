@@ -221,9 +221,10 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => TelaResultados(
-                    interpretacao: calc.obterInterpretacao(),
+                    
                     resultadoImc: calc.calculaImc(),
                     resultadoTexto: calc.obterResultado(),
+                    interpretacao: calc.obterInterpretacao(),
 
                   )),
                 );
