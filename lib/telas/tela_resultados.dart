@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:harry_potter/cartao_padrao.dart';
-import 'package:harry_potter/constantes.dart';
-import 'package:harry_potter/tela_principal.dart';
+import 'package:harry_potter/componentes/cartao_padrao.dart';
+import 'package:harry_potter/componentes/constantes.dart';
+import 'package:harry_potter/telas/tela_principal.dart';
+import 'package:harry_potter/componentes/botao_inferior.dart';
 
 class TelaResultados extends StatelessWidget {
-  const TelaResultados({Key? key}) : super(key: key);
+
+ TelaResultados({required this.interpretacao, required this.resultadoTexto,required this.resultadoImc});
+
+  final String resultadoImc;
+  final String resultadoTexto;
+  final String interpretacao;
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +22,17 @@ class TelaResultados extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Resultado',
-                style: kTituloTextStyle,
-              )
-            ],
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Resultado',
+                  style: kTituloTextStyle,
+                )
+              ],
+            ),
           ),
           Expanded(
             flex: 5,
@@ -33,13 +42,16 @@ class TelaResultados extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('normal', style: kResultadoTextStyle,),
-                    Text('18.9', style: kValorTextStyle,),
-                    Text('Peso normal',style: kInformativo,textAlign: TextAlign.center,),
+                    Text(resultadoTexto.toUpperCase(), style: kResultadoTextStyle,),
+                    Text(resultadoImc, style: kValorTextStyle,),
+                    Text(interpretacao,style: kInformativo,textAlign: TextAlign.center,),
                   ],
                 )
             ),
           ),
+          BotaoInferior(aoPressionar: (){
+            Navigator.pop(context);
+          }, tituloBotao: 'RECALCULAR'),
         ],
       ),
     );

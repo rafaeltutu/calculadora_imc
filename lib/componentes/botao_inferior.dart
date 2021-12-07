@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:harry_potter/constantes.dart';
+import 'package:harry_potter/componentes/constantes.dart';
 
 class BotaoInferior extends StatelessWidget {
   BotaoInferior({required this.aoPressionar,required this.tituloBotao});

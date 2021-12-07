@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:harry_potter/constantes.dart';
-import 'package:harry_potter/conteudo_icon.dart';
-import 'package:harry_potter/tela_principal.dart';
-import 'dart:math';
+import 'package:harry_potter/componentes/botao_arrendodado.dart';
+import 'package:harry_potter/componentes/botao_inferior.dart';
+import 'package:harry_potter/componentes/constantes.dart';
+import 'package:harry_potter/componentes/conteudo_icon.dart';
+import 'package:harry_potter/telas/tela_principal.dart';
+import 'calculadora_imc.dart';
 
+import 'package:harry_potter/telas/tela_resultados.dart';
 
 enum Sexo {
   masculino,
@@ -16,36 +19,11 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
-class BotaoArrendodado extends StatelessWidget {
-  BotaoArrendodado({required this.icone, required this.aoPressionar});
-  final Function aoPressionar;
-  final IconData icone;
-
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(icone),
-      shape: CircleBorder(),
-      fillColor: Color(0xFF7E7E7E),
-      elevation: 6.0,
-      constraints: BoxConstraints.tightFor(
-        width: 56.0,
-        height: 56.0,
-      ),
-      onPressed: () {
-        aoPressionar();
-      },
-    );
-  }
-}
-
 
 class _HomeState extends State<Home> {
-
   double altura1 = 1.80;
-  double?  resultado;
-  String calcular =  'Calcular';
+  double? resultado;
+  String calcular = 'Calcular';
   Sexo? sexoSelecionado = null;
   int altura = 180;
   int peso = 70;
@@ -55,8 +33,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculadora IMC',  ),
-
+        title: Text(
+          'Calculadora IMC',
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -166,9 +145,9 @@ class _HomeState extends State<Home> {
                           children: [
                             BotaoArrendodado(
                               icone: FontAwesomeIcons.minus,
-                              aoPressionar: (){
+                              aoPressionar: () {
                                 setState(() {
-                                  peso --;
+                                  peso--;
                                   //print (peso);
                                 });
                               },
@@ -178,12 +157,11 @@ class _HomeState extends State<Home> {
                             ),
                             BotaoArrendodado(
                               icone: FontAwesomeIcons.plus,
-                              aoPressionar: (){
+                              aoPressionar: () {
                                 setState(() {
-                                  peso ++;
+                                  peso++;
                                 });
                               },
-
                             ),
                           ],
                         ),
@@ -210,24 +188,22 @@ class _HomeState extends State<Home> {
                           children: [
                             BotaoArrendodado(
                               icone: FontAwesomeIcons.minus,
-                              aoPressionar: (){
+                              aoPressionar: () {
                                 setState(() {
-                                  idade --;
+                                  idade--;
                                 });
                               },
-
                             ),
                             SizedBox(
                               width: 10.0,
                             ),
                             BotaoArrendodado(
                               icone: FontAwesomeIcons.plus,
-                              aoPressionar:(){
+                              aoPressionar: () {
                                 setState(() {
-                                  idade ++;
+                                  idade++;
                                 });
                               },
-
                             ),
                           ],
                         ),
@@ -238,28 +214,23 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          Container(
-            color: kCorLaranja,
-            margin: EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: kAlturaInferior,
-            child: TextButton(onPressed: () {
-                 setState(() {
+          BotaoInferior(
+              aoPressionar: () {
+                CalculadoraImc calc = CalculadoraImc(altura: altura, peso: peso);
 
-                   resultado = peso/(altura*altura);
-                   calcular = resultado.toString();
-                   //print(calcular);
-                 });
-            },
-                child: Text( calcular, style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.black
-                ),),
-            ),
-          )
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TelaResultados(
+                    interpretacao: calc.obterInterpretacao(),
+                    resultadoImc: calc.calculaImc(),
+                    resultadoTexto: calc.obterResultado(),
+
+                  )),
+                );
+              },
+              tituloBotao: 'CALCULAR')
         ],
       ),
     );
   }
 }
-
